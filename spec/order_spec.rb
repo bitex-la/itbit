@@ -8,6 +8,10 @@ describe Itbit::Order do
     orders.each{|o| o.should be_an Itbit::Order}
     orders.first.side.should == :buy
     orders.last.side.should == :sell
+    orders.first.tap do |order|
+      pending
+      fail
+    end
   end
 
   it 'Accepts filtering by instrument, status and pagination' do
