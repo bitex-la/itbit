@@ -1,0 +1,1 @@
+{"id":"8fd820d3-baff-4d6f-9439-ff03d816c7ce","walletId":"wallet-000","side":"buy","instrument":"XBTUSD","type":"limit","amount":"1.00500000","displayAmount":"1.00500000","price":"100.00000000","volumeWeightedAveragePrice":"0","amountFilled":"0","createdTime":"2014-11-06T16:09:47.6800000Z","status":"open","metadata":{"foo":"bar"},"clientOrderIdentifier":"o"}
