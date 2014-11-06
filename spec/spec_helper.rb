@@ -27,6 +27,7 @@ RSpec.configure do |config|
     Itbit.client_key = 'the-client-key'
     Itbit.secret = 'the-secret'
     Itbit.user_id = 'the-user-id'
+    Itbit.default_wallet_id = 'wallet-000'
   end
 
   config.order = "random"

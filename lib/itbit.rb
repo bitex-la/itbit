@@ -12,5 +12,6 @@ module Itbit
   mattr_accessor :client_key
   mattr_accessor :secret
   mattr_accessor :user_id
+  mattr_accessor :default_wallet_id
   mattr_accessor :sandbox
 end

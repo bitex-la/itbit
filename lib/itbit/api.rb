@@ -20,7 +20,7 @@ module Itbit
       }
       response = RestClient::Request
         .execute(:method => verb, :url => url, :payload => payload, :headers => headers)
-      JSON.parse(response.to_str)
+      JSON.parse(response.to_str) if response.to_str.presence
     end
 
     def self.sign_message(verb, url, json_body, nonce, timestamp)
