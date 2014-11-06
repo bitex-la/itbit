@@ -9,8 +9,20 @@ describe Itbit::Order do
     orders.first.side.should == :buy
     orders.last.side.should == :sell
     orders.first.tap do |order|
-      pending
-      fail
+      order.id.should == "8fd820d3-baff-4d6f-9439-ff03d816c7ce"
+      order.wallet_id.should == "b440efce-a83c-4873-8833-802a1022b476"
+      order.side.should == :buy
+      order.instrument.should == :xbtusd
+      order.type.should == :limit
+      order.amount.should == "1.005".to_d
+      order.price.should == "100".to_d
+      order.amount_filled.should == "0".to_d
+      order.volume_weighted_average_price.should == '0'.to_d
+      order.created_time.should == 1415290187
+      order.status.should == :open
+      order.metadata.should == {"foo" => "bar"}
+      order.client_order_identifier.should == "o"
+      order.display_amount = "1.0050000".to_d
     end
   end
 

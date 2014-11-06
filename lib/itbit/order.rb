@@ -19,6 +19,17 @@ module Itbit
       end
     end
 
+    %w(amount price amount_filled volume_weighted_average_price 
+    display_amount).each do |attr|
+      define_method("#{attr}=") do |value|
+        instance_variable_set("@#{attr}", value.to_d)
+      end
+    end
+    
+    def created_time=(value)
+      @created_time = value.is_a?(String) ? Time.parse(value).to_i : value
+    end
+
     # Lists all orders for a wallet.
     # Results can be filtered and paginated by passing in these options.
     #  wallet_id: String, defaults to Itbit.default_wallet_id 
