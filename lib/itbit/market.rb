@@ -7,13 +7,17 @@ module Itbit
     # The symbol ticker conveniently formatted as a ruby Hash with
     # symbolized keys.
     def self.ticker
-      ticker = Api.request(:get, "/markets/#{self.symbol}/ticker").symbolize_keys
-      ticker.each do |key, value|
-        next if [:pair, :servertimeUTC].include? key
-        ticker[key] = value.to_d
+      raw_ticker = Api.request(:get, "/markets/#{self.symbol}/ticker")
+      raw_ticker.reduce({}) do |ticker, pair|
+        key = pair.first.underscore.to_sym
+        value = case key
+        when :pair then pair[1].underscore.to_sym
+        when :servertime_utc then Time.parse(pair[1]).to_i
+        else pair[1].to_d
+        end
+        ticker[key] = value
+        ticker
       end
-      ticker[:servertimeUTC] = Time.parse(ticker[:servertimeUTC])
-      ticker
     end
 
     # The symbol order book as a Hash with two keys: bids and asks.

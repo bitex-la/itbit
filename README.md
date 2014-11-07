@@ -2,6 +2,10 @@
 
 [ItBit](https://www.itbit.com) API Client library.
 
+Does some minimal type de-serializations from stringified numbers into
+BigDecimals, camelcased strings into underscored symbols, and times into integer
+timestamps.
+
 
 ## Installation
 
@@ -26,31 +30,30 @@ fetching all public market data available.
 ### Ticker
 
     ruby > Itbit::XBTUSDMarketData.ticker
-    => {
-        :ask => 641.29,
-        :askAmt => 0.5,
-        :bid => 622,
-        :bidAmt => 0.0006,
-        :high24h => 618.00000000,
-        :highToday => 618.00000000,
-        :lastAmt => 0.00040000,
-        :lastPrice => 618.00000000,
-        :low24h => 618.00000000,
-        :lowToday => 618.00000000,
-        :openToday => 618.00000000,
-        :pair => symbol.to_s.upcase,
-        :servertimeUTC => 2014-06-24 20:42:35,
-        :volume24h => 0.00040000,
-        :volumeToday => 0.00040000,
-        :vwap24h => 618.00000000,
-        :vwapToday => 618.00000000
-      }
+    => {ask: 641.29,
+        ask_amt: 0.5,
+        bid: 622,
+        bid_amt: 0.0006,
+        high24h: 618.00000000,
+        high_today: 618.00000000,
+        last_amt: 0.00040000,
+        last_price: 618.00000000,
+        low24h: 618.00000000,
+        low_today: 618.00000000,
+        open_today: 618.00000000,
+        pair: symbol.to_s.upcase,
+        servertime_utc: 2014-06-24 20:42:35,
+        volume24h: 0.00040000,
+        volume_today: 0.00040000,
+        vwap24h: 618.00000000,
+        vwap_today: 618.00000000
+       }
 
 ### Order Book
 
     ruby > Itbit::XBTUSDMarketData.orders
-    => {:bids=>[[632.0, 38.910443037975], [630.87, 1.8], ...],
-        :asks=>[[634.9, 0.95], [648.0, 0.4809267], ...]}
+    => {bids: [[632.0, 38.910443037975], [630.87, 1.8], ...],
+        asks: [[634.9, 0.95], [648.0, 0.4809267], ...]}
 
 ### Trades
 
@@ -61,26 +64,78 @@ fetching all public market data available.
 
 ## Use for Private Trading
 
-### Authentication
-TODO
+### Authentication and default wallet
+You should request your credentials to api@itbit.com, once you've got them
+you can configure the gem like this:
 
-### Get your balances, deposit addresses
-TODO
+    Itbit.client_key = 'your_client_key'
+    Itbit.secret = 'your_secret_key'
+    Itbit.user_id = 'your_user_id'
 
-### Place a Bid
-TODO
+You can point the gem to itbit's sandbox like this:
 
-### Place an Ask
-TODO
+    Itbit.sandbox = true
+
+Itbit gives you more than one 'wallet', which is a set of btc, usd, eur and sgd
+balances to use. Most of the time you'll probably end up using just one wallet,
+which can be configured like this:
+
+    Itbit.default_wallet_id = 'the-wallet-id-you-want-to-use'
+
+All api calls that need a wallet accept one as an optional argument as well.
+
+### Get your wallets
+
+    ruby > Itbit::Wallet.all
+    => { id: "3F2504E0-4F89-41D3-9A0C-0305E82C3301",
+         name: "Wallet",
+         balances: [
+           { balance: "10203.25",
+             currency_code: :usd,
+             trading_balance: "10003.25"
+           },
+           { balance: "402.110",
+             currency_code: :xbt,
+             trading_balance: "402.110"
+           },
+           { balance: "0.00",
+             currency_code: :eur,
+             trading_balance: "0.00"
+           }
+         ]
+       }
+
+### Create a new wallet
+
+    ruby > Itbit::Wallet.create!('wallet_name')
+
+### Place Bids and Asks
+You can also pass in a has of keyword arguments at the end, for 
+sending metadata and your own order identifiers (which must be unique)
+Check the spec/order_spec.rb for more examples.
+
+    ruby > Itbit::Order.create!(:buy, :xbtusd, 1.5, 500.0)
+    ruby > Itbit::Order.create!(:sell, :xbtsgd, 1.5, 500.0)
 
 ### List your pending or recently active orders
-TODO
+Orders can also be filtered and paginated by passing in keyword arguments,
+Check spec/order_spec.rb for more examples.
 
-### List your recent transactions
-TODO
+    ruby > Itbit::Order.all
 
-## Sandbox
-TODO
+### Find an order
+
+    ruby > Itbit::Order.find('some-order-id')
+
+### Cancel an order
+
+    ruby > Itbit::Order.find('some-order-id').cancel!
+
+### List your trades
+Trades can also be filtered by date and paginated by passing in keyword arguments,
+Check spec/trade_spec.rb for more examples.
+
+    ruby > Itbit::Trade.all
 
 ## Contributing
 

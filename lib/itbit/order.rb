@@ -106,6 +106,8 @@ module Itbit
       Api.request(:delete, "/wallets/#{wallet_id}/orders/#{id}")
       self.status = :cancelling
       return self
+    rescue RestClient::UnprocessableEntity
+      return nil
     end
   end
 end
