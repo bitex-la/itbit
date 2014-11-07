@@ -16,12 +16,15 @@ module Itbit
       translate_wallet(Api.request(:post, "/wallets", name: name, userId: Itbit.user_id))
     end
 
-    def self.translate_wallet(wallet)
-      wallet.symbolize_keys!
+    def self.translate_wallet(raw_wallet)
+      wallet = raw_wallet.reduce({}) do |w, pair|
+        w[pair[0].underscore.to_sym] = pair[1]
+        w
+      end
       wallet[:balances] = wallet[:balances].dup.collect do |b|
-        { balance: b['balance'].to_d,
-          currency_code: b['currencyCode'].downcase.to_sym,
-          trading_balance: b['tradingBalance'].to_d
+        { total_balance: b['totalBalance'].to_d,
+          currency: b['currency'].downcase.to_sym,
+          available_balance: b['availableBalance'].to_d,
         }
       end
       wallet
