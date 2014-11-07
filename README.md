@@ -90,17 +90,21 @@ All api calls that need a wallet accept one as an optional argument as well.
     => { id: "3F2504E0-4F89-41D3-9A0C-0305E82C3301",
          name: "Wallet",
          balances: [
-           { balance: "10203.25",
-             currency_code: :usd,
-             trading_balance: "10003.25"
+           { total_balance: "20.0".to_d,
+             currency: :usd,
+             available_balance: "10.0".to_d
            },
-           { balance: "402.110",
-             currency_code: :xbt,
-             trading_balance: "402.110"
+           { total_balance: "0.0".to_d,
+             currency: :xbt,
+             available_balance: "0.0".to_d
            },
-           { balance: "0.00",
-             currency_code: :eur,
-             trading_balance: "0.00"
+           { total_balance: "0.0".to_d,
+             currency: :eur,
+             available_balance: "0.0".to_d
+           },
+           { total_balance: "0.0".to_d,
+             currency: :sgd,
+             available_balance: "0.0".to_d
            }
          ]
        }
