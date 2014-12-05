@@ -8,7 +8,7 @@ describe Itbit::MarketData do
   }.each do |symbol, market_data|
     describe "when getting #{symbol} market data" do
       it "gets the ticker" do
-        stub_get("/markets/#{symbol}/ticker", "market_ticker_#{symbol}")
+        stub_get("/markets/#{symbol.upcase}/ticker", "market_ticker_#{symbol}")
         market_data.ticker.should == {
           ask: "641.29".to_d,
           ask_amt: "0.5".to_d,

@@ -6,10 +6,9 @@ module Itbit
     def self.request(verb, path, options = { })
       timestamp = (Time.now.to_f * 1000).round.to_s
       nonce = timestamp
-      prefix = Itbit.sandbox ? 'beta-api' : 'api'
       payload = options.empty? || verb == :get ? nil : JSON.dump(options)
       query = options.any? && verb == :get ? "?#{options.to_query}" : ''
-      url = "https://#{prefix}.itbit.com/v1#{path}#{query}"
+      url = "#{api_url}#{path}#{query}"
 
       signature = sign_message(verb, url, payload, nonce, timestamp)
       headers = {
@@ -21,6 +20,11 @@ module Itbit
       response = RestClient::Request
         .execute(:method => verb, :url => url, :payload => payload, :headers => headers)
       JSON.parse(response.to_str) if response.to_str.presence
+    end
+    
+    def self.api_url
+      prefix = Itbit.sandbox ? 'beta-api' : 'api'
+      "https://#{prefix}.itbit.com/v1"
     end
 
     def self.sign_message(verb, url, json_body, nonce, timestamp)

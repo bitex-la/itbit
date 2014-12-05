@@ -7,7 +7,7 @@ module Itbit
     # The symbol ticker conveniently formatted as a ruby Hash with
     # symbolized keys.
     def self.ticker
-      raw_ticker = Api.request(:get, "/markets/#{self.symbol}/ticker")
+      raw_ticker = JSON.parse(RestClient.get("#{Api.api_url}/markets/#{symbol.upcase}/ticker"))
       raw_ticker.reduce({}) do |ticker, pair|
         key = pair.first.underscore.to_sym
         value = case key
@@ -23,7 +23,7 @@ module Itbit
     # The symbol order book as a Hash with two keys: bids and asks.
     # Each of them is a list of list consisting of [price, quantity]
     def self.orders
-      order_book = old_request("/markets/#{self.symbol.upcase}/orders").symbolize_keys
+      order_book = old_request("/markets/#{symbol.upcase}/orders").symbolize_keys
       order_book.each do |key, value|
         order_book[key] = value.collect { |tuple| tuple.collect(&:to_d) }
       end

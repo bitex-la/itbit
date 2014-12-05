@@ -57,7 +57,7 @@ fetching all public market data available.
 
 ### Trades
 
-    ruby > Itbit::XBTUSDMarketData.transactions
+    ruby > Itbit::XBTUSDMarketData.trades
     => [ {date: unix_timestamp, price: 123.5, amount: 1.97, tid: 98375},
          {date: unix_timestamp, price: 123.5, amount: 1.97, tid: 98376},
          ...]
