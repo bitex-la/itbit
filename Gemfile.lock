@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    itbit (0.0.3)
+    itbit (0.0.4)
       activesupport
       rest_client
 
