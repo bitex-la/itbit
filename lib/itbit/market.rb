@@ -7,7 +7,9 @@ module Itbit
     # The symbol ticker conveniently formatted as a ruby Hash with
     # symbolized keys.
     def self.ticker
-      raw_ticker = JSON.parse(RestClient.get("#{Api.api_url}/markets/#{symbol.upcase}/ticker"))
+      url = "#{Api.api_url}/markets/#{symbol.upcase}/ticker"
+      rest_cl = RestClient::Request.execute :method => :get, :url => url, :ssl_version => 'SSLv23'
+      raw_ticker = JSON.parse(rest_cl)
       raw_ticker.reduce({}) do |ticker, pair|
         key = pair.first.underscore.to_sym
         value = case key
@@ -40,10 +42,11 @@ module Itbit
     end
 
     # @visibility private
-    def self.old_request(path, options = { })
+    def self.old_request(path, options = { })    
       url = "https://www.itbit.com/api/v2#{path}"
       url << "?#{options.to_query}" if options.any?
-      JSON.parse(RestClient.get(url))
+      rest_cl = RestClient::Request.execute :method => :get, :url => url, :ssl_version => 'SSLv23'
+      JSON.parse(rest_cl)
     end
   end
 
