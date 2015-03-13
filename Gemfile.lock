@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    itbit (0.0.4)
+    itbit (0.0.5)
       activesupport
       rest_client
 
@@ -23,7 +23,7 @@ GEM
     minitest (5.3.5)
     netrc (0.7.9)
     rake (10.3.2)
-    rest_client (1.8.2)
+    rest_client (1.8.3)
       netrc (~> 0.7.7)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
