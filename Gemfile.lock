@@ -3,7 +3,7 @@ PATH
   specs:
     itbit (0.0.4)
       activesupport
-      rest_client
+      rest-client
 
 GEM
   remote: https://rubygems.org/
@@ -20,11 +20,13 @@ GEM
     diff-lcs (1.2.5)
     i18n (0.6.9)
     json (1.8.1)
+    mime-types (2.4.3)
     minitest (5.3.5)
-    netrc (0.7.9)
+    netrc (0.10.3)
     rake (10.3.2)
-    rest_client (1.8.2)
-      netrc (~> 0.7.7)
+    rest-client (1.7.3)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
