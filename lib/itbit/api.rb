@@ -17,8 +17,12 @@ module Itbit
         x_auth_nonce: nonce,
         content_type: 'application/json'
       }
-      response = RestClient::Request
-        .execute(:method => verb, :url => url, :payload => payload, :headers => headers)
+      response = RestClient::Request.execute(
+        :method => verb,
+        :url => url,
+        :payload => payload,
+        :headers => headers,
+        :ssl_version => 'SSLv23')
       JSON.parse(response.to_str) if response.to_str.presence
     end
     

@@ -1,8 +1,8 @@
+require 'active_support'
 require 'active_support/core_ext'
 require 'json'
 require 'rest_client'
 require 'bigdecimal'
-require 'active_support'
 require 'digest/sha2'
 require 'base64'
 Dir[File.expand_path("../itbit/*.rb", __FILE__)].each {|f| require f}

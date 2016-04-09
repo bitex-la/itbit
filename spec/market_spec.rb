@@ -31,7 +31,7 @@ describe Itbit::MarketData do
       end
       
       it "gets the order book" do
-        stub_old("/markets/#{symbol.upcase}/orders", 'order_book')
+        stub_get("/markets/#{symbol.upcase}/order_book", 'order_book')
         market_data.orders.should == {
           bids: [[639.21,1.95],[637.0,0.47],[630.0,1.58]],
           asks: [[642.4,0.4],[643.3,0.95],[644.3,0.25]]
@@ -39,14 +39,14 @@ describe Itbit::MarketData do
       end
       
       it "gets the trades" do
-        stub_old("/markets/#{symbol.upcase}/trades", 'trades', since: 0)
+        stub_get("/markets/#{symbol.upcase}/trades", 'trades', since: 0)
         trades = market_data.trades
-        trades.size.should == 6
+        trades.size.should == 4
         trades.first.tap do |t|
-          t[:date].should == 1415218064
-          t[:price].should == 340.0
-          t[:amount].should == 1.9718
-          t[:tid].should == 98375
+          t[:date].should == 1460161126
+          t[:price].should == 418.14
+          t[:amount].should == 0.019
+          t[:tid].should == 601855
         end
       end
     end
