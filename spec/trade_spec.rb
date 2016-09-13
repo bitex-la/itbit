@@ -28,13 +28,15 @@ describe Itbit::Trade do
       rangeStart: 0,
       rangeEnd: 100000,
       page: '1',
-      perPage: '200')
+      perPage: '200',
+      lastExecutionId: 300)
     trades = Itbit::Trade.all(
       wallet_id: 'wallet-001',
       range_start: 0,
       range_end: 100000,
       page: 1,
-      per_page: 200)
+      per_page: 200,
+      last_execution_id: 300)
     trades[:trading_history].size.should == 2
     trades[:trading_history].each{|o| o.should be_an Itbit::Trade}
   end
