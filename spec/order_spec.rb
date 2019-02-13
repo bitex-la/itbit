@@ -47,6 +47,13 @@ describe Itbit::Order do
     order.should be_an Itbit::Order
     order.id.should == "8fd820d3-baff-4d6f-9439-ff03d816c7ce"
   end
+
+  it 'Accepts an order with extra fields' do
+    stub_get("/wallets/wallet-000/orders/8fd820d3-baff-4d6f-9439-ff03d816c7ce", 'order_with_extra_fields')
+    order = Itbit::Order.find("8fd820d3-baff-4d6f-9439-ff03d816c7ce")
+    order.should be_an Itbit::Order
+    order.id.should == "8fd820d3-baff-4d6f-9439-ff03d816c7ce"
+  end
   
   it 'Places an order' do
     stub_post("/wallets/wallet-000/orders", 'order',
