@@ -10,10 +10,7 @@ module Itbit
       :display_amount, :metadata, :client_order_identifier
     
     def initialize(attrs)
-      attrs
-        .map { |k, v| ["#{k.underscore}=", v]}
-        .select { |setter, v| respond_to?(setter) }
-        .each { |setter, v| send(setter, v) }
+      attrs.each{|k, v| try("#{k.underscore}=", v) }
     end
     
     %w(side instrument currency type status).each do |attr|
